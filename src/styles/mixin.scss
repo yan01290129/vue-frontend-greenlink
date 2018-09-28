@@ -1,0 +1,146 @@
+//混合器
+
+@mixin border-radius($radius: 4px) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin border-radius-t-l($radius: 4px) {
+  -webkit-border-top-left-radius: $radius;
+  -moz-border-top-left-radius: $radius;
+  -ms-border-top-left-radius: $radius;
+  -o-border-top-left-radius: $radius;
+  border-top-left-radius: $radius;
+}
+
+@mixin border-radius-t-r($radius: 4px) {
+  -webkit-border-top-right-radius: $radius;
+  -moz-border-top-right-radius: $radius;
+  -ms-border-top-right-radius: $radius;
+  -o-border-top-right-radius: $radius;
+  border-top-right-radius: $radius;
+}
+
+@mixin border-radius-b-l($radius: 4px) {
+  -webkit-border-bottom-left-radius: $radius;
+  -moz-border-bottom-left-radius: $radius;
+  -ms-border-bottom-left-radius: $radius;
+  -o-border-bottom-left-radius: $radius;
+  border-bottom-left-radius: $radius;
+}
+
+@mixin border-radius-b-r($radius: 4px) {
+  -webkit-border-bottom-right-radius: $radius;
+  -moz-border-bottom-right-radius: $radius;
+  -ms-border-bottom-right-radius: $radius;
+  -o-border-bottom-right-radius: $radius;
+  border-bottom-right-radius: $radius;
+}
+
+@mixin border($color: #e9edf2) {
+  border: 1px solid $color;
+}
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin boxShadow($x: 0, $y: 0, $blur: 8px, $color: rgba(0, 0, 0, 0.2)) {
+  -moz-box-shadow: $arguments;
+  -webkit-box-shadow: $arguments;
+  box-shadow: $arguments;
+}
+
+@mixin scrollBar {
+  &::-webkit-scrollbar-track-piece {
+    background: #d3dce6;
+  }
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #99a9bf;
+    border-radius: 20px;
+  }
+}
+
+@mixin relative {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+// flex： 将对象作为弹性伸缩盒显示
+@mixin flex-container {
+  display: -webkit-box;
+  /* 老版本语法: Safari 3.1-6,  iOS 6-, Android browser, older WebKit browsers.  */
+  display: -moz-box;
+  /* 老版本语法: Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;
+  /* 混合版本语法: IE 10 */
+  display: -webkit-flex;
+  /* 新版本语法： Chrome 21+ */
+  display: flex;
+  /* 新版本语法： Opera 12.1, Firefox 22+ */
+}
+
+// inline-flex：将对象作为内联块级弹性伸缩盒显示
+@mixin flex-inline-container {
+  display: -webkit-inline-flex;
+  /*webkit*/
+  display: inline-flex;
+}
+
+@mixin flex ($grow: 1) {
+  -webkit-box-flex: $grow;
+  /* OLD - iOS 6-, Safari 3.1-6 */
+  -moz-box-flex: $grow;
+  /* OLD - Firefox 19- */
+  -webkit-flex: $grow;
+  /* Chrome */
+  -ms-flex: $grow;
+  /* IE 10 */
+  flex: $grow;
+  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+@mixin flex-direction ($d: column) {
+  -webkit-flex-direction: $d;
+  -moz-flex-direction: $d;
+  -ms-flex-direction: $d;
+  -o-flex-direction: $d;
+  flex-direction: $d;
+}
+
+@mixin flex-j-c ($j: center) {
+  -webkit-justify-content: $j;
+  -moz-justify-content: $j;
+  -ms-justify-content: $j;
+  -o-justify-content: $j;
+  justify-content: $j;
+}
+@mixin flex-a-i ($a: center) {
+  -webkit-align-items: $a;
+  -moz-align-items: $a;
+  -ms-align-items: $a;
+  -o-align-items: $a;
+  align-items: $a;
+}
+@mixin flex-middle {
+  @include flex-container;
+  @include flex-j-c;
+  @include flex-a-i;
+}
+@mixin display-flex {
+  display: flex;
+}
+@mixin flex-1 {
+  @include flex;
+}

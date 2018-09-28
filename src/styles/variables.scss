@@ -1,0 +1,60 @@
+// 自定义常量$
+
+$primary-color: #1e98ff;
+$info-color: #1e98ff;
+$success-color: #4eb940;
+$warning-color: #fcbf19;
+$error-color: #ff4141;
+$purple-color: #9474dc;
+// hover
+$primary-hover-color: #3da6ff;
+$info-hover-color: #3da6ff;
+$success-hover-color: #66c25a;
+$warning-hover-color: #ffcb3c;
+$error-hover-color: #ff4f4f;
+// Border color
+$border-color-base: #dddee1; // outside
+$border-color-split: #e9eaec; // inside
+// Shadow
+$shadow-color: rgba(0, 0, 0, .2);
+$shadow-card: 0 1px 1px 0 rgba(0, 0, 0, .1);
+$shadow-up: 0 -1px 6px $shadow-color;
+$shadow-down: 0 1px 6px $shadow-color;
+$shadow-left: -1px 0 6px $shadow-color;
+$shadow-right: 1px 0 6px $shadow-color;
+
+// 默认字体Color
+$font-default-color: #2d384b;
+// 中灰色
+$medium-grey-color: #8492a6;
+$light-grey-color: #bdc5d0;
+// 边框
+$border-color: #d5d9e0;
+// 分割线
+$line-between-color: #e9edf2;
+
+$background-color: #f5f7fa;
+
+// 菜单
+$menuBg: #304156;
+$subMenuBg:#1f2d3d;
+$menutextcolor: #bfcbd9;
+$menuHover:#48576a;
+$menuactivetextcolor:#1e98ff;
+$menuactiveHover:#fff;
+
+// Z-index
+$zindex-loading-bar: 2000;
+
+// Animation
+$animation-time: .3s;
+$transition-time: .2s;
+$ease-in-out: ease-in-out;
+
+// Slider
+$slider-color: tint($primary-color, 20%);
+$slider-height: 4px;
+$slider-margin: 16px 0;
+$slider-button-wrap-size: 18px;
+$slider-button-wrap-offset: -4px;
+$slider-disabled-color: #ccc;
