@@ -2,12 +2,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import axios from '@/api'
 import 'normalize.css/normalize.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/index.scss'
 import '@/icons'
-import axios from '@/api'
 
 Vue.use(ElementUI)
 Vue.prototype.$http = axios

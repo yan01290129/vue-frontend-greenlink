@@ -1,51 +1,57 @@
 <template>
-  <el-row type="flex" justify="center" align="middle" class="login-row">
-    <el-col :span="12">
-      <div class="login-wrap">
-        <div class="left-wrap">
-          <img src="../../assets/login/login_img.png">
-        </div>
-          <div class="right-wrap">
-            <div class="login-box">
-              <h4>
-                <em></em><em></em>&nbsp;绿心网大宗贸易管理系统&nbsp;
-                <em></em><em></em>
-              </h4>
-              <div class="login-container">
-                <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="ruleValidate" ref="loginForm" label-position="left">
-                  <el-form-item prop="phone">
-                    <span class="svg-container svg-container_login">
-                      <svg-icon icon-class="user" />
-                    </span>
-                    <el-input ref="phoneInput" :maxlength="11" v-model="loginForm.phone" autoComplete="on" placeholder="手机号码" @keyup.enter.native="submit();" />
-                  </el-form-item>
-                  <el-form-item prop="password">
-                    <span class="svg-container">
-                      <svg-icon icon-class="password"></svg-icon>
-                    </span>
-                    <el-input ref="passwordInput" :type="pwdType" v-model="loginForm.password" autoComplete="on" placeholder="密码" @keyup.enter.native="submit();" />
-                    <span class="show-pwd" @click="showPwd">
-                      <svg-icon icon-class="eye" />
-                    </span>
-                  </el-form-item>
-                  <el-button type="primary" style="width:100%;" shape="circle" class="submit-btn" :loading="loading" @click="submit()">登录</el-button>
-                  <div class="forget-password__edit">
-                    <router-link :to="{ path: '/forget' }">忘记密码</router-link>
-                  </div>
-                </el-form>
+  <el-container class="login-body">
+    <div class="login-wrap">
+      <div class="left-wrap">
+        <img src="@/assets/login/login_img3.png">
+      </div>
+      <div class="right-wrap">
+        <div class="login-box">
+          <h4>
+            <em></em><em></em>&nbsp;绿心网大宗贸易管理系统&nbsp;
+            <em></em><em></em>
+          </h4>
+          <div class="login-container">
+            <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="ruleValidate" ref="loginForm" label-position="left">
+              <el-form-item prop="phone">
+                <span class="svg-container svg-container_login">
+                  <svg-icon icon-class="user" />
+                </span>
+                <el-input ref="phoneInput" :maxlength="11" v-model="loginForm.phone" autoComplete="on" placeholder="手机号码" @keyup.enter.native="submit();" />
+              </el-form-item>
+              <el-form-item prop="password">
+                <span class="svg-container">
+                  <svg-icon icon-class="password"></svg-icon>
+                </span>
+                <el-input ref="passwordInput" :type="pwdType" v-model="loginForm.password" autoComplete="on" placeholder="密码" @keyup.enter.native="submit();" />
+                <span class="show-pwd" @click="showPwd">
+                  <svg-icon icon-class="eye" />
+                </span>
+              </el-form-item>
+              <el-button type="primary" style="width:100%;" shape="circle" class="submit-btn" :loading="loading" @click="submit()">登录</el-button>
+              <div class="forget-password__edit">
+                <router-link :to="{ path: '/forget' }">忘记密码</router-link>
               </div>
-            </div>
-            <div class="footer">国泰绿通（北京）科技发展有限公司</div>
+            </el-form>
           </div>
         </div>
-    </el-col>
-  </el-row>
+        <div class="footer">国泰绿通（北京）科技发展有限公司</div>
+      </div>
+    </div>
+  </el-container>
 </template>
 
 <script>
 import validate from './util/validate'
 export default {
   data() {
+    var phoneError = (rule, value, callback) => {
+      if (this.error.phone) return callback(new Error('手机号码错误'))
+      callback()
+    }
+    var passwordError = (rule, value, callback) => {
+      if (this.error.password) return callback(new Error('密码错误'))
+      callback()
+    }
     return {
       loginForm: {
         phone: '',
@@ -56,17 +62,19 @@ export default {
       ruleValidate: {
         phone: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
-          { validator: validate.phoneRule, trigger: 'blur' }
+          { validator: validate.apicontactPhoneRule, trigger: 'blur' },
+          { validator: phoneError, trigger: 'blur,change' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
-          {
-            min: 6,
-            max: 12,
-            message: '长度在 6 到 12 个字符',
-            trigger: 'change'
-          }
+          { min: 6, max: 12, message: '密码长度有错', trigger: 'change' },
+          { validator: validate.contactPwdRule, trigger: 'blur' },
+          { validator: passwordError, trigger: 'blur,change' }
         ]
+      },
+      error: {
+        phone: false,
+        password: false
       }
     }
   },
@@ -107,13 +115,10 @@ export default {
               if (err.errorCode === 'PHONE_WRONG') {
                 this.error.phone = true
                 this.$refs.loginForm.validateField('phone')
-                this.$refs.phoneInput.inputSelect()
               }
               if (err.errorCode === 'PASSWORD_WRONG') {
-                console.log(this.error)
                 this.error.password = true
                 this.$refs.loginForm.validateField('password')
-                this.$refs.passwordInput.inputSelect()
               }
             })
         } else {
@@ -126,12 +131,90 @@ export default {
         }
       })
     }
+  },
+  watch: {
+    'loginForm.phone': {
+      handler(n, o) {
+        this.error.phone = false
+      }
+    },
+    'loginForm.password': {
+      handler(n, o) {
+        this.error.password = false
+      }
+    }
   }
 }
 </script>
 
-
 <style rel="stylesheet/scss" lang="scss">
+.login-body {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-image: url(../../assets/login/bg1.png);
+}
+.login-wrap {
+  width: 44rem;
+  height: 25rem;
+  margin: 0 auto;
+  display: -webkit-box;
+  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+.left-wrap {
+  height: 100%;
+  width: 22rem;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+.right-wrap {
+  flex: 1;
+  display: -webkit-box;
+  display: flex;
+  -moz-flex-direction: column;
+  -o-flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.right-wrap .login-box {
+  -webkit-box-flex: 1;
+  flex: 1;
+  padding: 0 2rem;
+}
+.right-wrap .login-box h4 {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 3rem;
+}
+.right-wrap .login-box h4 em {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1px;
+  background-color: #bdc5d0;
+  position: relative;
+  top: -0.3rem;
+}
+.right-wrap .footer {
+  margin-top: 2rem;
+  font-size: 0.6rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #b6bac0;
+}
+.forget-password__edit {
+  text-align: center;
+  font-size: 0.6rem;
+  margin-top: 1rem;
+}
+
 $bg: #fff;
 $light_gray: #000;
 
@@ -178,70 +261,9 @@ $light_gray: #000;
   cursor: pointer;
   user-select: none;
 }
-</style>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
   -webkit-text-fill-color: #333;
-}
-
-.login-row {
-  height: 100%;
-  background-image: url(https://green-public-test.oss-cn-shanghai.aliyuncs.com/intranet/static/img/bg.08e8bd7.png);
-}
-.login-wrap {
-  width: 44rem;
-  height: 25rem;
-  margin: 0 auto;
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-}
-.left-wrap img {
-  height: 100%;
-  width: 22rem;
-}
-.right-wrap {
-  width: 22rem;
-  display: -webkit-box;
-  display: flex;
-  -moz-flex-direction: column;
-  -o-flex-direction: column;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  flex-direction: column;
-  background-color: #fff;
-}
-.right-wrap .login-box {
-  -webkit-box-flex: 1;
-  flex: 1;
-  padding: 0 2rem;
-}
-.right-wrap .login-box h4 {
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-top: 3rem;
-}
-.right-wrap .login-box h4 em {
-  display: inline-block;
-  width: 1.5rem;
-  height: 1px;
-  background-color: #bdc5d0;
-  position: relative;
-  top: -0.3rem;
-}
-.right-wrap .footer {
-  font-size: 0.6rem;
-  text-align: center;
-  margin-bottom: 1rem;
-  color: #b6bac0;
-}
-.forget-password__edit {
-  text-align: center;
-  font-size: 0.6rem;
-  margin-top: 1rem;
 }
 </style>

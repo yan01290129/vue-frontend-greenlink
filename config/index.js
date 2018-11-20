@@ -11,7 +11,8 @@ module.exports = {
     proxyTable: {
       '/api': {
         // target: 'https://greenlink-scmc.fowtest.com', //目标接口域名
-        target: 'http://192.168.1.137:8094',
+        target: 'https://scmc.green-iot.cn',
+        // target: 'http://192.168.1.137:8094',
         // target: 'http://result.eolinker.com/5YM55qu94a567f6eb34f4650cabde5becd7efa9ccc2a77d?uri=',
         changeOrigin: true, //是否跨域
         pathRewrite: {
