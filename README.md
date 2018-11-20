@@ -1,2 +1,2 @@
-# vue-frontend-greenlink
-元邦项目
+# yan-platform-frontend
+前端模板
